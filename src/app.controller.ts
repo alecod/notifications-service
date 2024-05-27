@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 import {randomUUID} from 'node:crypto'
+import { CreateNotificationBody } from './create-notification-body';
 
 @Controller('notifications') // nesse decorator posso definir uma rota
 export class AppController {
@@ -13,7 +14,9 @@ export class AppController {
   }
 
   @Post() // neesse outro tambem
-  async create(@Body() body: any) {
+  async create(@Body() body: CreateNotificationBody) {
+    const { category, content, recipient } = body
+
     await this.prisma.notifications.create({
       data: {
         id: randomUUID(),
