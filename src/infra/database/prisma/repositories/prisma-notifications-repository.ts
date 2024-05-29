@@ -9,7 +9,7 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
   constructor(private prisma: PrismaService) {}
 
   async findById(notificationId: string): Promise<Notification | null> {
-    const notification = await this.prisma.notifications.findUnique({
+    const notification = await this.prisma.notification.findUnique({
       where: {
         id: notificationId,
       },
@@ -23,7 +23,7 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
   }
 
   async findManyByRecipientId(recipientId: string): Promise<Notification[]> {
-    const notifications = await this.prisma.notifications.findMany({
+    const notifications = await this.prisma.notification.findMany({
       where: {
         recipientId,
       },
@@ -33,7 +33,7 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
   }
 
   async countManyByRecipientId(recipientId: string): Promise<number> {
-    const count = await this.prisma.notifications.count({
+    const count = await this.prisma.notification.count({
       where: {
         recipientId,
       },
@@ -45,7 +45,7 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
   async create(notification: Notification): Promise<void> {
     const raw = PrismaNotificationMapper.toPrisma(notification);
 
-    await this.prisma.notifications.create({
+    await this.prisma.notification.create({
       data: raw,
     });
   }
